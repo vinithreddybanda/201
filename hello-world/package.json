@@ -7,6 +7,6 @@
     "start":"node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Anvesh Nalimela <nalimelaanvesh@gmail.com>",
+  "author": "Vinith Reddy Banda <vinithreddy08.123@gmail.com>",
   "license": "ISC"
 }
