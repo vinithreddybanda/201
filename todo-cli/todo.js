@@ -1,12 +1,72 @@
-console.log("My Todo-list\n");
+const todoList = () => {
+  all = []
+  const add = (todoItem) => {
+    all.push(todoItem)
+  }
+  const markAsComplete = (index) => {
+    all[index].completed = true
+  }
 
-console.log("Overdue");
-console.log("[ ] Submit assignment 2023-12-19\n");
+  const overdue = () => {
+   return all.filter((item)=>item.dueDate< today)
+  }
 
-console.log("Due Today");
-console.log("[x] Pay rent");
-console.log("[ ] Service Vehicle\n");
+  const dueToday = () => {
+     return all.filter((item)=>item.dueDate === today)
+  }
 
-console.log("Due Later");
-console.log("[ ] File taxes 2023-12-21");
-console.log("[ ] Pay electric bill 2023-12-21");
+  const dueLater = () => {
+    return all.filter((item)=>item.dueDate> today)
+  }
+
+  const toDisplayableList = (list) => {
+     let res = list.map(item=>`${item.completed ? '[x] ':'[ ] '}${item.title} ${item.dueDate===today ? " ":item.dueDate}`).join("\n")
+        return res;
+  }
+  return { all, add, markAsComplete, overdue, dueToday, dueLater, toDisplayableList };
+}
+
+// ####################################### #
+// DO NOT CHANGE ANYTHING BELOW THIS LINE. #
+// ####################################### #
+
+const todos = todoList();
+
+const formattedDate = d => {
+  return d.toISOString().split("T")[0]
+}
+
+var dateToday = new Date()
+const today = formattedDate(dateToday)
+const yesterday = formattedDate(
+  new Date(new Date().setDate(dateToday.getDate() - 1))
+)
+const tomorrow = formattedDate(
+  new Date(new Date().setDate(dateToday.getDate() + 1))
+)
+
+todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
+todos.add({ title: 'Pay rent', dueDate: today, completed: true })
+todos.add({ title: 'Service Vehicle', dueDate: today, completed: false })
+todos.add({ title: 'File taxes', dueDate: tomorrow, completed: false })
+todos.add({ title: 'Pay electric bill', dueDate: tomorrow, completed: false })
+
+console.log("My Todo-list\n\n")
+
+console.log("Overdue")
+var overdues = todos.overdue()
+var formattedOverdues = todos.toDisplayableList(overdues)
+console.log(formattedOverdues);
+console.log("\n\n")
+
+console.log("Due Today")
+let itemsDueToday = todos.dueToday()
+let formattedItemsDueToday = todos.toDisplayableList(itemsDueToday)
+console.log(formattedItemsDueToday);
+console.log("\n\n")
+
+console.log("Due Later")
+let itemsDueLater = todos.dueLater()
+let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater)
+console.log(formattedItemsDueLater);
+console.log("\n\n")
